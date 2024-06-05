@@ -1,0 +1,131 @@
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.site {
+    transition: all 0.3s ease;
+}
+
+.logo img {
+    width:var(--logo-size);
+    height:var(--logo-size);
+    border-radius: 50%;
+}
+nav .upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #80808028;
+    padding: 1rem;
+}
+
+nav .upper h3,
+nav .upper h4 {
+    color: var(--links-color);
+}
+
+nav .upper h4 > span {
+    text-decoration: underline;
+    text-underline-offset: 1px;
+    text-decoration-thickness: 2px;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+nav .upper h4 > span:nth-child(2) {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+nav .upper h4:hover > span:first-child,
+nav .upper h4:hover > span:last-child,
+.site:hover {
+    color: var(--primary-color);
+}
+
+nav .upper h4:hover > span:nth-child(2)  {
+    color: var(--links-color);
+}
+
+nav .upper div:first-child a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+nav .lower {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0.1rem;
+    box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.085);
+    -webkit-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.085);
+    -moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.085);
+}
+
+nav .lower .links ul {
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 1.5rem;
+} 
+
+nav .lower .links a {
+    color: var(--links-color);
+    padding: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+} 
+
+nav .lower .links a:hover {
+    background: #80808028;
+    border-radius: 8px;
+}
+
+
+.search {
+    background: #80808017;
+    width: 20%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-right: 1rem;
+}
+
+.search form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--links-color);
+}
+
+.search form input {
+    width: 90%;
+    padding: 0.2rem;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: none;
+    color: inherit;
+}
+
+.search form input::placeholder {
+    color: var(--links-color);
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.search form button {
+    border: none;
+    outline: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.search form button i {
+    font-size: 1.5rem;
+    opacity: 0.7;
+}

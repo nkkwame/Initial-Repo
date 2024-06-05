@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"/>
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/auth-page.css">
+    <link rel="stylesheet" href="assets/css/landingpage.css">
+    <link rel="shortcut icon" href="assets/imgs/logo.jfif" type="image/x-icon" id="fav">
+    <title>Anonymus</title>
+</head>
+<body>
+    <nav>
+        <div class="upper">
+            <div class="item">
+                <a href="#">
+                    <div class="logo">
+                        <img src="assets/imgs/logo.jfif" alt="">
+                    </div>
+                    <h3 class="site">Network-Market</h3>
+                </a>
+            </div>
+            <div class="item">
+                <div id="btn-signUp-signIn">
+                    <h4>
+                        <span>Sign In</span><span>or</span><span>Join us</span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="lower">
+            <div class="links">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="search">
+                <form action="" method="post">
+                    <input type="text" name="search" placeholder="Search" autocomplete="off">
+                    <button type="submit" name="submit">
+                        <i class="ri-search-2-line"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="landingage-container">
+        <div class="cover">
+            <div class="text-container">
+                <div>
+                    <h1>Lorem ipsum dolor...</h1>
+                    <h3>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut cumque sapiente, aut sint consectetur nihil laudantium nisi, recusandae hic repellendus, autem dolore voluptatem ducimus facilis perspiciatis quia!</h3>
+                    <div class="action-container">
+                        <div class="action-one">
+                            <h4>Get started</h4>
+                        </div>
+                        <div class="action-two">
+                            <h4><a href="#landingpage-features">Explore features of the site</a></h4>
+                        </div>
+                    </div>
+                    <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit</h4>
+                </div>
+                <div class="img-align">
+                    <img src="assets/imgs/vault.png" alt="" class="vault">
+                    <img src="assets/imgs/sack_of_gold.png" alt="" class="sack-gold">
+                    <img src="assets/imgs/sack_of_gold.png" alt="" class="sack-gold-2">
+                </div>
+            </div>
+            <div class="img-container">
+            </div>
+        </div>
+    </div>
+    <div class="landingpage-features" id="landingpage-features">
+        <div class="heading">
+            <h1>Things to know about this site</h1>
+        </div>
+    </div>
+    
+    <!-- SignIn SignUp Model -->
+    <div class="signIn-join-model">
+        <div class="l-s-container">
+            <div class="head">
+                <div class="logo">
+                    <img src="assets/imgs/logo.jfif" alt="">
+                </div>
+                <h1 class="site">Network-Market</h1>
+            </div>
+            <div class="data">
+                <div class="tab">
+                    <ul>
+                        <li class="active" id="signIn">Sign In</li>
+                        <li id="signUp">Sign Up</li>
+                    </ul>
+                </div>
+                <!-- SignIn Form -->
+                <form action="" class="sign-in-form active">
+                    <div class="form-group">
+                        <label for="email">Email</label><br>
+                        <input type="email" name="email" id="email" placeholder="yourname@example.com" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label><br>
+                        <input type="password" name="password" id="password" placeholder="yourpassword">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit">Sign In</button>
+                    </div>
+                </form>
+                <!-- SignUp Form -->
+                <form action="" class="sign-up-form">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label><br>
+                        <input type="text" name="first-name" id="first-name" placeholder="yourfirstname" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label><br>
+                        <input type="text" name="last-name" id="last-name" placeholder="yourlastname" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label><br>
+                        <input type="email" name="email" id="user-email" placeholder="yourname@example.com" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label><br>
+                        <input type="password" name="password" id="user-password" placeholder="yourpassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label><br>
+                        <input type="password" name="confirm-password" id="confirm-password" placeholder="confirmyourpassword">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit">Create Account</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Footer -->
+            <div class="auth-footer-sign-in">
+                <p>Don't have an account?</p>
+                <p id="btn-signUp">Sign Up</p>
+            </div>
+            <div class="auth-footer-sign-up">
+                <p>Already have an account?</p>
+                <p id="btn-signIn">Sign In</p>
+            </div>
+        </div>
+        <!-- Modal close btn -->
+        <button class="btn-close">
+            <i class="ri-close-large-fill"></i>
+        </button>
+    </div>
+    <script src="assets/js/auth-page.js"></script>
+</body>
+</html>
