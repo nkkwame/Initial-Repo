@@ -21,3 +21,4 @@ displaySmallScreenNav.addEventListener('click', () => {
     isOpen=!isOpen;
 });
 
+
