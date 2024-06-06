@@ -240,15 +240,15 @@ nav .lower .links a:hover {
 
 
    .site {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     #btn-signUp-signIn h4 span {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
     nav .lower .links a {
-        font-size: calc(100% - 2px);
+        font-size: calc(100% - 1px);
     }
 
     .search {
@@ -256,7 +256,7 @@ nav .lower .links a:hover {
     }
 
     .search form button i {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
 }
 
@@ -290,8 +290,20 @@ nav .lower .links a:hover {
 
 @media screen and (max-width: 440px) {
 
+    .site {
+        font-size: calc(100% + 2px);
+    }
+
+    nav .upper div:last-child {
+        gap: 10px;
+    }
+
+    #btn-signUp-signIn > h4 > span {
+        font-size: calc(100% - 3px);
+    }
+
     nav .upper div {
-        font-size: calc(100% + 5px);
+        font-size: calc(100% + 1px);
     }
 
     .links-modal .links-small-screens {
@@ -299,7 +311,7 @@ nav .lower .links a:hover {
     }
 
     .links-modal .links-small-screens > ul > li > a {
-        font-size: calc(100% + 3px);
+        font-size: calc(100% + 1.5px);
     }
     
 }
