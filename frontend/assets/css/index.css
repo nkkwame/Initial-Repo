@@ -64,15 +64,30 @@ ul {
 }
 
 /* END OF DARK MODE VARIABLES */
+
+/* VARIABLES BASED ON SCREEN SIZES */
+
+@media screen and (max-width: 1230px) {
+    
+    :root {
+        --logo-size: 28px;
+    }
+}
+
+@media screen and (max-width: 992) {
+    
+    /* :root {
+        --logo-size: 28px;
+    } */
+}
+
+
 /* END OF VARIABLES */
 
 body {
     background-color: var(--background-color);
+    overflow-x: none;
     /* color: #EBEBEB; */
-}
-
-#fav {
-    border-radius: 10px;
 }
 
 /* .container {

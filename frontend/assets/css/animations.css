@@ -1,0 +1,35 @@
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    33% {
+        opacity: 0.4;
+    }
+    66% {
+        opacity: 0.75;
+    }
+    100% {
+        opacity: 1;
+    }  
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0;
+    }
+    100% {
+        visibility: hidden;
+    }  
+}
+
+@keyframes slide-in-from-right {
+    0% {
+        right: -199px;
+    }
+    100% {
+        right: 0;
+    }
+}

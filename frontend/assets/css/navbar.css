@@ -1,7 +1,8 @@
 nav {
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
     gap: 0.6rem;
+    width: 100%;
 }
 
 .site {
@@ -55,6 +56,30 @@ nav .upper div:first-child a {
     align-items: center;
     justify-content: center;
     gap: 8px;
+}
+
+nav .upper div:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav .upper div:last-child button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    color: var(--links-color);
+    padding: 0.3rem;
+    font-size: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+}
+
+nav .upper div:last-child button > i {
+    transition: all 0.4s ease;
 }
 
 nav .lower {
@@ -128,4 +153,153 @@ nav .lower .links a:hover {
 .search form button i {
     font-size: 1.5rem;
     opacity: 0.7;
+}
+
+.links-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 15vh);
+    background: rgba(0, 0, 0, 0.288);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    backdrop-filter: blur(3px);
+    visibility: hidden;
+    opacity: 0;
+}
+
+.links-modal .links-small-screens {
+    background-color: white;
+    padding: 1rem;
+    height: 100%;
+    width: 30%;
+    position: absolute;
+    /* right: -200px; */
+}
+
+.links-slide-in {
+    animation: slide-in-from-right 0.4s ease-in 0.3s forwards;
+}
+
+.links-modal .links-small-screens > ul {
+    gap: 8px;
+    display: flex;
+    flex-flow: column nowrap; 
+}
+
+.links-modal .links-small-screens > ul > li {
+    border-bottom: 1px solid #4644442d ;
+}
+
+.links-modal .links-small-screens > ul > li  a {
+    font-size: calc(100% - 2px);
+    font-weight: 600;
+    color: var(--links-color);
+}
+
+@media screen and (max-width: 1230px) {
+
+    nav .upper {
+        padding: 0.8rem;
+    }
+
+    nav .lower {
+        padding: 0.2rem 0.1rem;
+    }
+
+    nav .lower .links ul {
+        padding: 0.4rem 0.8rem;
+        gap: 1.3rem;
+    } 
+
+    nav .lower .links a {
+        color: var(--links-color);
+        padding: 0.4rem;
+    } 
+
+    .search {
+        padding: 0.4rem;
+    }
+
+    .search form input {
+        padding: 0.18rem;
+        font-size: 0.9rem;
+    }
+
+    .search form button i {
+        font-size: 1.38rem;
+    }
+    
+}
+
+@media screen and (max-width: 992px) {
+
+
+   .site {
+        font-size: 1rem;
+    }
+
+    #btn-signUp-signIn h4 span {
+        font-size: 0.8rem;
+    }
+
+    nav .lower .links a {
+        font-size: calc(100% - 2px);
+    }
+
+    .search {
+        width: 30%;
+    }
+
+    .search form button i {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    nav .upper div:last-child button {
+        display: flex;
+    }
+
+    nav .lower {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+        width: fit-content;
+        display: none;
+    }
+
+    nav .lower div:last-child {
+        display: none;
+    }
+    
+}
+
+@media screen and (max-width: 626px) {
+
+    .links-modal .links-small-screens {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 440px) {
+
+    nav .upper div {
+        font-size: calc(100% + 5px);
+    }
+
+    .links-modal .links-small-screens {
+        width: 55%;
+    }
+
+    .links-modal .links-small-screens > ul > li > a {
+        font-size: calc(100% + 3px);
+    }
+    
 }
