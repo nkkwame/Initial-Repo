@@ -92,15 +92,8 @@
     z-index: 2;
 }
 
-.img-align .sack-gold {
-    position: absolute;
-    width: 280px;
-    top: 40%;
-    right: 60%;
-    z-index: 1;
-}
 
-.img-align .sack-gold-2 {
+.img-align .sack-gold {
     position: absolute;
     width: 280px;
     top: 38%;
@@ -109,14 +102,29 @@
 }
 
 @media screen and (max-width: 1230px) {
-    .img-align .sack-gold-2 {
+    .img-align .sack-gold {
         display: none;
     }
 }
 
 @media screen and (max-width: 1040px) {
-    .img-align .sack-gold {
-        display: none;
+    .img-align .vault {
+        width: 550px;
     }
+<<<<<<< HEAD
     
+=======
+}
+
+@media screen and (max-width: 900px) {
+    .img-align .vault {
+        width: 520px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* .img-align .vault {
+        width: 520px;
+    } */
+>>>>>>> responsive-landingpage
 }
