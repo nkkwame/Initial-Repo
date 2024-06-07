@@ -95,6 +95,7 @@
     z-index: 2;
 }
 
+
 /* .img-align .sack-gold {
     position: absolute;
     width: 280px;
@@ -111,21 +112,17 @@
 
 @media screen and (max-width: 1040px) {
     .img-align .vault {
-        width: 550px;
         width: 400px;
     }
 }
 
 @media screen and (max-width: 900px) {
     .img-align .vault {
-        width: 520px;
         width: 380px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    /* .img-align .vault {
-        width: 520px;
 
     .text-container {
         flex-direction: column;
@@ -194,4 +191,7 @@
         padding-left: 0.5rem;
         padding-right: 0.5rem;
     }
+    /* .img-align .vault {
+        transform: translateX(15%);
+    } */
 }
