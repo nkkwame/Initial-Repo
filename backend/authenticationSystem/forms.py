@@ -15,8 +15,8 @@ class RegistrationForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     # username= forms.CharField(required= True)
 
-    # class Meta:
-
+    class Meta:
+        fields= ['username', 'password']
     
 
     def clean_email(self):

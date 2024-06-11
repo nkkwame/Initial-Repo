@@ -1,0 +1,28 @@
+html {
+    font-family: sans-serif;
+}
+
+.errorlist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.message.error,
+.errorlist > li {
+    color: white;
+    background: linear-gradient(120deg, red,#70686842,red);
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.message.success {
+    color: white;
+    background: linear-gradient(120deg, green,#70686842,green);
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    width: fit-content;
+}

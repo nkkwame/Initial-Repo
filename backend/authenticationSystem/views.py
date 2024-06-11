@@ -30,10 +30,9 @@ def register_user(request):
             user= form.save(commit= False)
             user.is_active= False
             user.save()
-
-            current_site= get_current_site(request)
-            mail_subject= 'Account Activation'
-            message= render_to_string('registration/accountActivation.html', {
+            current_site= get_current_site(request) #Geting the curent site domain
+            mail_subject= 'Account Activation' #Email to be sent preparation process
+            message= render_to_string('auth/accountActivation.html', {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -44,22 +43,23 @@ def register_user(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
-            messages.success(request, 'Please check your email to complete the registration..')
+            messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
             return redirect('index')
-    return render(request, 'registration/register.html', context= {
+    return render(request, 'auth/register.html', context= {
         'form': RegistrationForm
     })
 
+# Account activation
 def activate(request, uidb64, token): 
     user= auth.get_user_model()
 
-    try:
+    try: # Decoding the hashes recieved from the link to verify if it a valid link to activate their account
         uid= force_str(urlsafe_base64_decode(uidb64))
         user= User.objects.get(pk= uid)
     except (TypeError, ValidationError, OverflowError, User.DoesNotExist):
         user= None
 
-    if user is not None and account_activation_token.check_token(user, token):
+    if user is not None and account_activation_token.check_token(user, token): # checking the validity of the token
         user.is_active= True
         user.save()
 
@@ -70,24 +70,31 @@ def activate(request, uidb64, token):
         messages.error(request, 'Your account activation failed the link has been expired')
         return redirect('index')
 def login_page(request, *args, **kwargs):
+    messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user 
+    form= LoginForm()
     if request.method == 'POST':
-        email= request.POST['email']
-        userpassword= request.POST['userpassword']
-        user= auth.authenticate(request, username= email, password= userpassword)
-        print(user)
-        if user is not None:
-            auth.login(request, user)
-            messages.success(request, ('You have been logged in...'))
+        form= LoginForm(request, data=request.POST)
+
+        if form.is_valid():
+            username= form.cleaned_data.get('username')
+            password= form.cleaned_data.get('password')
+            user= auth.authenticate(request, username= username, password= password)
+            if user is not None:
+                auth.login(request, user)
             return redirect('index')
         else:
-            messages.success(request, ('There was an error logging in. Please try again...'))
+            messages.error(request, 'Make sure your account is veryfied and the credentials are valid')
             return redirect('login')
     else:
-        context= {
+        return render(request, 'auth/login.html', context= {
+    'form': LoginForm,
+    'messages': messages_to_display
+    })
 
-        }
-        return render(request, 'signin_page.html', context= context)
 def logout_page(request, *args, **kwargs):
     auth.logout(request)
     messages.success(request, ('You have been logged out...'))
     return redirect('index')
+
+def passwordReset(request):
+    return render(request, 'auth/passwordReset.html')

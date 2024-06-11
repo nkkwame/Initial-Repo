@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+        
+<div class="center">  
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Login</button>
+    </form>      
+</div>
+<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+<a href="{% url 'password-reset' %}">Forgotten password</a>
+
+
+
+{% endblock content %}
