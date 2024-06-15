@@ -69,6 +69,7 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, 'Your account activation failed the link has been expired')
         return redirect('index')
+    
 def login_page(request, *args, **kwargs):
     messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user 
     form= LoginForm()
@@ -124,6 +125,8 @@ def passwordReset(request):
                 email.send()
                 messages.success(request, 'Please check your email to reset your password..')
                 return redirect('index')
+            
+            
             else:
                 messages.error(request, 'No account was found with the provided E-mail. Please check and try again...')
                 return redirect('password-reset-request')
@@ -141,7 +144,8 @@ def passwordResetConfirm(request, uidb64, token):
     except (TypeError, ValidationError, OverflowError, User.DoesNotExist):
         user= None
 
-    if user is not None and account_activation_token.check_token(user, token):
+    not_expired = password_reset_token.check_token(user, token)
+    if user is not None and not_expired:
         return redirect('password-change', id=uidb64)
     else:
         messages.error(request, 'Password reset failed the link has been expired')
