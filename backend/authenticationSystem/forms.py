@@ -5,12 +5,12 @@ from django.core.exceptions import ValidationError
 
 class RegistrationForm(UserCreationForm):
     email= forms.EmailField(required= True)
-    firstName= forms.CharField(required= True)
-    lastName= forms.CharField(required= True)
+    first_name= forms.CharField(required= True)
+    last_name= forms.CharField(required= True)
     
     class Meta:
         model= User
-        fields= ['firstName', 'lastName', 'username', 'email', 'password1', 'password2']
+        fields= ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
     def clean_email(self):
         email= self.cleaned_data.get('email')
