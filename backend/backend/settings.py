@@ -140,3 +140,7 @@ EMAIL_HOST_PASSWORD= password
 EMAIL_USE_TLS= True
 
 LOGIN_REDIRECT_URL='/' # for redirecting users to index page after login
+
+# Token expiry duration
+ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION = 60 * 24  # 1 days
+PASSWORD_RESET_TOKEN_EXPIRY_DURATION = 60 * 2  # 2 HOURS

@@ -8,6 +8,7 @@ from django.contrib.auth.models import User, auth
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from django.conf import settings
 from django.urls import reverse
 from .tokensGenerator import *
 from .models import *
@@ -23,22 +24,27 @@ def index(request):
     })
 
 def register_user(request):
+    messages_to_display= messages.get_messages(request)
     form= RegistrationForm()
     if request.method == 'POST':
         form= RegistrationForm(request.POST)
         if form.is_valid():
+            to_email= form.cleaned_data.get('email')
+            username= form.cleaned_data.get('username')
             user= form.save(commit= False)
             user.is_active= False
             user.save()
             current_site= get_current_site(request) #Geting the curent site domain
+            token= TokenGeneratorValidator.make_token(user) #Generating hash 
+            tokenID= TokensModel.objects.create(token=token, user_id=user.id) # Registering token to database
+            tokenID.save()
             mail_subject= 'Account Activation' #Email to be sent preparation process
             message= render_to_string('auth/mail/accountActivation.html', {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user)
+                'token': token
             })
-            to_email= form.cleaned_data.get('email')
             email= EmailMessage(
                 mail_subject, message, to=[to_email]
             )
@@ -46,7 +52,8 @@ def register_user(request):
             messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
             return redirect('index')
     return render(request, 'auth/register.html', context= {
-        'form': RegistrationForm
+        'form': RegistrationForm,
+        'messages': messages_to_display
     })
 
 # Account activation
@@ -59,10 +66,10 @@ def activate(request, uidb64, token):
     except (TypeError, ValidationError, OverflowError, User.DoesNotExist):
         user= None
 
-    if user is not None and account_activation_token.check_token(user, token): # checking the validity of the token
+    if user is not None and TokenGeneratorValidator.check_token(user, token, settings.ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION): # checking the validity of the token
         user.is_active= True
         user.save()
-
+        TokensModel.objects.get(token= token).delete()
         auth.login(request, user)
         messages.success(request, 'Your account has been activated successfully')
         return redirect(reverse('login'))
@@ -108,21 +115,24 @@ def passwordReset(request):
                 user= User.objects.get(email= data)
             except (TypeError, ValidationError, User.DoesNotExist):
                 user= None
-            print(user)
+
             if user is not None:
+                token= TokenGeneratorValidator.make_token(user) #Generating hash 
+                tokenID= TokensModel.objects.create(token=token, user_id=user.id) # Registering token to database
                 current_site= get_current_site(request) #Geting the curent site domain
                 mail_subject= 'Password Reset' #Email to be sent preparation process
                 message= render_to_string('auth/mail/passwordResetMail.html', {
                     'user': user,
                     'domain': current_site,
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': account_activation_token.make_token(user)
+                    'token': token
                 })
                 to_email= form.cleaned_data.get('email')
                 email= EmailMessage(
                 mail_subject, message, to=[to_email]
             )
                 email.send()
+                tokenID.save()
                 messages.success(request, 'Please check your email to reset your password..')
                 return redirect('index')
             
@@ -143,9 +153,10 @@ def passwordResetConfirm(request, uidb64, token):
         user= User.objects.get(pk= uid)
     except (TypeError, ValidationError, OverflowError, User.DoesNotExist):
         user= None
-
-    not_expired = password_reset_token.check_token(user, token)
+    print(token)
+    not_expired = TokenGeneratorValidator.check_token(user, token, settings.PASSWORD_RESET_TOKEN_EXPIRY_DURATION)
     if user is not None and not_expired:
+        # TokensModel.delete(token= token)
         return redirect('password-change', id=uidb64)
     else:
         messages.error(request, 'Password reset failed the link has been expired')
@@ -166,6 +177,7 @@ def passwordChange(request, id):
             if user is not None and user.id == int(force_str(urlsafe_base64_decode(id))):
                 user.set_password(passwordOne)
                 user.save()
+                TokensModel.objects.get(user_id= user.id).delete()
                 current_site= get_current_site(request) #Geting the curent site domain
                 mail_subject= 'Password Reset Confirmation' #Email to be sent preparation process
                 message= render_to_string('auth/mail/passwordResetDone.html', {
