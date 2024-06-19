@@ -5,5 +5,6 @@ from authenticationSystem import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name= 'index'),
-    path('accounts/', include('authenticationSystem.urls'))
+    path('accounts/', include('authenticationSystem.urls')),
+    path('payment/', include('paymentSystem.urls'))
 ]

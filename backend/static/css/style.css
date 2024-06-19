@@ -26,3 +26,18 @@ html {
     border-radius: 10px;
     width: fit-content;
 }
+
+.payment-method {
+    display: flex;
+    gap: 2rem;
+}
+
+.hide {
+    display: none;
+}
+
+.otp {
+    display: none;
+    margin-top: 1rem;
+    gap: 1rem;
+}

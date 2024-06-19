@@ -13,6 +13,7 @@
 <div class="center">        
     {% if user.is_authenticated %}
         <p>Welcome, {{user.username}}. Thanks for log in</p>
+        <a href="{% url 'payment-page' %}">Make payment</a>
         <a href="{% url 'logout' %}">LogOut</a>
     {% else %}
         <p>Welcome, new user. Please log in</p>

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+        
+<div class="center">
+  <div class="payment-method">
+    <div class="mobile-money">
+      <label for="mobile-money">Mobile-Money</label>
+      <input type="radio" name="method" id="mobile-money" value="Mobile-Money" checked>
+    </div>
+    <div class="bank">
+      <label for="bank">Bank</label>
+      <input type="radio" name="method" id="bank" value="Bank">
+    </div>
+  </div> 
+  <br>
+  <form action="" method="POST" class="momoForm">
+    {% csrf_token %}
+    <label for="accnumber">Account Number</label>
+    <input type="number" name="accnumber" id="accnumber"><br><br>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email-ad"><br><br>
+    <label for="amount">Amount</label>
+    <input type="number" name="amount" id="amount"><br><br>
+    <label for="network-carriers">Select Network</label>
+    <select name="network-carriers" id="network-carriers">
+      {% for i in response %}
+        <option value="{{i.code}}">{{i.name}}</option>
+      {% endfor %}
+    </select><br><br>
+    <input type="button" value="pay" id="submit">
+    <div class="otp">
+      <input type="text" id="opt-text" placeholder="Enter OTP"><input type="button" id="opt-btn" value="Send OTP"><input type="hidden" name="ref" id="refrence-code">
+    </div>
+  </form>       
+</div>
+
+<a href="{% url 'index' %}">Home</a>
+
+{% endblock content %}
+
