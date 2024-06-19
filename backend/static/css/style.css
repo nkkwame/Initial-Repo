@@ -41,3 +41,7 @@ html {
     margin-top: 1rem;
     gap: 1rem;
 }
+
+.bankForm {
+    display: none;
+}

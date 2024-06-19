@@ -15,12 +15,18 @@ def pay(request):
     'Authorization': f'Bearer {key}'
 }
     list_of_carriers= requests.get(url='https://api.paystack.co/bank?currency=GHS&type=mobile_money', headers= headers)
-    response= list_of_carriers.json()
-    list= []
-    for i in response['data']:
-        list.append(i)
+    list_of_banks= requests.get(url='https://api.paystack.co/bank?country=ghana', headers= headers)
+    response_carriers= list_of_carriers.json()
+    response_banks= list_of_banks.json()
+    list_ofc= []
+    list_ofb= []
+    for i in response_carriers['data']:
+        list_ofc.append(i)
+    for i in response_banks['data']:
+        list_ofb.append(i)
     return render(request, 'pay/pay.html', context= {
-        'response': list
+        'response_carriers': list_ofc,
+        'response_banks': list_ofb
     })
 
 def IntiateTransaction(request):

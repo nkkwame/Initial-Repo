@@ -4,13 +4,27 @@ const submitBtn= document.querySelector('#submit')
 const el=document.querySelector('.otp')
 const optBtn= document.querySelector('#opt-btn')
 const refText= document.querySelector('#refrence-code')
+const accountNumberInput = document.getElementById('account-number');
+const cardNumberInput = document.getElementById('card-number');
+  
+    
 // paymentForm.addEventListener("submit", payWithPaystack, false);
 selectedPayment.forEach(x => {
   x.addEventListener('click', () => {
-    console.log(x.value)
+    console.log(x.value);
+    const mf= document.querySelector('.momoForm')
+    const bf= document.querySelector('.bankForm')
+    if (x.value == 'Bank') {
+        mf.style.display= 'none'
+        bf.style.display= 'block'
+    }else{
+        mf.style.display= 'block'
+        bf.style.display= 'none'
+    }
   })
 })
 
+// Intiating transanction
 submitBtn.addEventListener('click', (e) => {
   e.preventDefault()
   const email= document.getElementById('email-ad').value
@@ -44,6 +58,7 @@ submitBtn.addEventListener('click', (e) => {
   });
 });
 
+// Submiting otp
 optBtn.addEventListener('click', () => {
   const opt_code= $('#opt-text').val()
   $.ajax({
@@ -62,3 +77,17 @@ optBtn.addEventListener('click', () => {
     }
   });
 })
+
+// Format account number
+accountNumberInput.addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, ''); // removing all non digits characters
+    const formattedValue = value.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/g, '$1 $2 $3 $4'); // grouping them into four to reach 16 inputs, format them with space
+    this.value = formattedValue;
+  });
+
+  // Format card number
+  cardNumberInput.addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    const formattedValue = value.replace(/(\d{2})(\d{2})/, '$1 / $2');
+    this.value = formattedValue;
+  });

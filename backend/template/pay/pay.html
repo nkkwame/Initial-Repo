@@ -23,16 +23,17 @@
   </div> 
   <br>
   <form action="" method="POST" class="momoForm">
+    <h2>Mobile Money Details</h2>
     {% csrf_token %}
     <label for="accnumber">Account Number</label>
-    <input type="number" name="accnumber" id="accnumber"><br><br>
+    <input type="number" name="accnumber" id="accnumber" placeholder="0123456789"><br><br>
     <label for="email">Email</label>
-    <input type="email" name="email" id="email-ad"><br><br>
+    <input type="email" name="email" id="email-ad" placeholder="example@gmail.com"><br><br>
     <label for="amount">Amount</label>
     <input type="number" name="amount" id="amount"><br><br>
     <label for="network-carriers">Select Network</label>
     <select name="network-carriers" id="network-carriers">
-      {% for i in response %}
+      {% for i in response_carriers %}
         <option value="{{i.code}}">{{i.name}}</option>
       {% endfor %}
     </select><br><br>
@@ -40,8 +41,40 @@
     <div class="otp">
       <input type="text" id="opt-text" placeholder="Enter OTP"><input type="button" id="opt-btn" value="Send OTP"><input type="hidden" name="ref" id="refrence-code">
     </div>
-  </form>       
-</div>
+  </form>
+  
+
+  <form id="bank-details-form" class="bankForm">
+    <h2>Bank Details</h2>
+  
+    <div class="form-group">
+      <label for="account-number">Account Number:</label>
+      <input type="text" id="account-number" placeholder="0000 0000 0000 0000" name="account-number" maxlength="19" pattern="[0-9]{16}" required>
+    </div><br>
+  
+    <div class="form-group">
+      <label for="card-number">Card Number:</label>
+      <input type="text" id="card-number" placeholder="MM / YY" name="card-number" maxlength="4" pattern="\d{2}/\d{2}" required>
+    </div><br>
+  
+    
+    <div class="form-group">
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" name="amount" required>
+    </div><br>
+    
+    <div class="form-group">
+      <label for="bank-name">Bank Name:</label>
+      <select name="network-carriers" id="network-carriers">
+        {% for i in response_banks %}
+          <option value="{{i.code}}">{{i.name}}</option>
+        {% endfor %}
+      </select>
+    </div><br>
+    <input type="button" value="pay" id="submitbk">
+  </form>
+
+</div><br>
 
 <a href="{% url 'index' %}">Home</a>
 
