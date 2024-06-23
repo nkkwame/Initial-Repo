@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 
+
+
 #Token model
 class TokensModel(models.Model):
     token= models.CharField(blank=False, null=False, max_length= 999999999999)

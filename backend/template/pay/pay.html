@@ -22,9 +22,32 @@
     </div>
   </div> 
   <br>
-  <form action="" method="POST" class="momoForm">
+  <form id="paymentForm">
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email-address" required />
+    </div>
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="tel" id="amount" required />
+    </div>
+    <div class="form-group">
+      <label for="first-name">First Name</label>
+      <input type="text" id="first-name" />
+    </div>
+    <div class="form-group">
+      <label for="last-name">Last Name</label>
+      <input type="text" id="last-name" />
+    </div>
+    <div class="form-submit">
+      <button type="submit" onclick="payWithPaystack()"> Pay </button>
+    </div>
+  </form>
+  
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- <form action="" method="POST" class="momoForm">
     <h2>Mobile Money Details</h2>
-    {% csrf_token %}
+    
     <label for="accnumber">Account Number</label>
     <input type="number" name="accnumber" id="accnumber" placeholder="0123456789"><br><br>
     <label for="email">Email</label>
@@ -41,7 +64,7 @@
     <div class="otp">
       <input type="text" id="opt-text" placeholder="Enter OTP"><input type="button" id="opt-btn" value="Send OTP"><input type="hidden" name="ref" id="refrence-code">
     </div>
-  </form>
+  </form> -->
   
 
   <form id="bank-details-form" class="bankForm">
@@ -53,19 +76,19 @@
     </div><br>
   
     <div class="form-group">
-      <label for="card-number">Card Number:</label>
-      <input type="text" id="card-number" placeholder="MM / YY" name="card-number" maxlength="4" pattern="\d{2}/\d{2}" required>
+      <label for="birth-day">Birthday:</label>
+      <input type="text" id="birth-day" placeholder="YYYY-MM-DD" name="birth-day" maxlength="8" pattern="\d{4}/\d{2}/\d{2}" required>
     </div><br>
   
     
     <div class="form-group">
-      <label for="amount">Amount:</label>
-      <input type="number" id="amount" name="amount" required>
+      <label for="amountBk">Amount:</label>
+      <input type="number" id="amountBk" name="amountBk" required>
     </div><br>
     
     <div class="form-group">
       <label for="bank-name">Bank Name:</label>
-      <select name="network-carriers" id="network-carriers">
+      <select name="bank-name" id="bank-name">
         {% for i in response_banks %}
           <option value="{{i.code}}">{{i.name}}</option>
         {% endfor %}

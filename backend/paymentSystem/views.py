@@ -15,7 +15,7 @@ def pay(request):
     'Authorization': f'Bearer {key}'
 }
     list_of_carriers= requests.get(url='https://api.paystack.co/bank?currency=GHS&type=mobile_money', headers= headers)
-    list_of_banks= requests.get(url='https://api.paystack.co/bank?country=ghana', headers= headers)
+    list_of_banks= requests.get(url='https://api.paystack.co/bank?country=ghana&pay_with_bank=true', headers= headers)
     response_carriers= list_of_carriers.json()
     response_banks= list_of_banks.json()
     list_ofc= []
@@ -29,7 +29,7 @@ def pay(request):
         'response_banks': list_ofb
     })
 
-def IntiateTransaction(request):
+def IntiateMoMoTransaction(request):
     if request.method == 'POST':
         email= request.POST.get('email')
         phone= request.POST.get('phone')
@@ -58,7 +58,7 @@ def IntiateTransaction(request):
         response= make_a_charge.json()
         return JsonResponse(response, safe= False)
 
-def continueTransaction(request):
+def continueMoMoTransaction(request):
     if request.method == 'POST':
         opt_code= request.POST.get('opt_code')
         ref_code= request.POST.get('ref_code')
@@ -68,6 +68,29 @@ def continueTransaction(request):
         "otp": opt_code, 
         "reference": ref_code,
         }
+
+        continue_charge= requests.post(url, headers={
+                        'Authorization': f'Bearer {key}',
+                        'Content-Type': 'application/json'
+                    }, json=data)
+        response= continue_charge.json()
+        return JsonResponse(response, safe= False)
+
+def IntiateBankTransaction(request):
+    if request.method == 'POST':
+        acN= request.POST.get('accountNumber')
+        dob= request.POST.get('dob')
+        amount= request.POST.get('amount')
+        bank= request.POST.get('bank')
+        url="https://api.paystack.co/charge"
+        data={ 
+            "email": str(request.user.email),
+            "amount": str(amount),
+            "bank": {
+                'code': str(bank),
+                'account_number': str(acN)
+                },
+            }
 
         continue_charge= requests.post(url, headers={
                         'Authorization': f'Bearer {key}',
