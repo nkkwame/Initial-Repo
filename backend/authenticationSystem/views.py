@@ -24,7 +24,8 @@ def index(request):
     try:
         if request.user.is_authenticated:
             userAccount= AccountModel.objects.get(user=request.user)
-            userAccountType= userAccount.is_PremiumUser()
+            if request.user.is_premium:
+                userAccountType= 'Premium User'
             userAccountBalance= userAccount.balance
         else:
             pass
@@ -106,8 +107,8 @@ def login_page(request, *args, **kwargs):
             if user is not None:
                 auth.login(request, user)
             try:
-                userAccount= AccountModel.objects.get(user=request.user)
-                if userAccount.is_PremiumUser():
+                # userAccount= AccountModel.objects.get(user=request.user)
+                if request.user.is_premium:
                     messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
             except AccountModel.DoesNotExist:
                 messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')

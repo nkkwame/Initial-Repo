@@ -6,14 +6,10 @@ class AccountModel(models.Model):
     user= models.ForeignKey(User, on_delete= models.CASCADE)
     balance= models.DecimalField(max_digits= 10, decimal_places= 2, default= 0, blank= False, null= False)
 
-    def is_PremiumUser(self):
-        if self.balance >= 30:
+    def make_PremiumUser(self):
             self.user.is_premium = True
             self.user.save()
             return 'Premium User'
-        else:
-            self.user.is_premium = False
-            return 'Non-Premium User'
 
     def __str__(self):
         return f'{self.user.username}'
@@ -34,7 +30,7 @@ class TransactionModel(models.Model):
     
     def process_transaction(self):
         if self.transactionType == 'deposit':
-            self.account.balance += self.amount
+            self.account.balance = 0
             self.account.save()
         elif self.transactionType == 'withdrawal':
             if self.account.balance >= self.amount:

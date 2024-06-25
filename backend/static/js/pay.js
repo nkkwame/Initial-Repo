@@ -147,7 +147,7 @@ accountNumberInput.addEventListener('input', function() {
           success: function(response) {
             console.log('verify response');
             console.log(response)
-            window.location.href = '/'; // Redirect to success page with
+            window.location.href = '/payment/successful-transaction/'; // Redirect to success page with
             },
           error: function(response) {
             alert('An error occurred');

@@ -23,9 +23,10 @@
             </div>
         </div>
         <div class="links">
-            <a href="{% url 'payment-page' %}">Make payment</a>
             {% if isPremium.accountType == 'Premium User'%}
                 <a href="{% url 'transaction-history' %}">Transaction History</a>
+            {%else%}    
+                <a href="{% url 'payment-page' %}">Make payment</a>
             {%endif%}        
             <a href="{% url 'logout' %}">LogOut</a>
         </div>
