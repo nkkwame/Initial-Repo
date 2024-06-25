@@ -9,6 +9,7 @@ class AccountModel(models.Model):
     def is_PremiumUser(self):
         if self.balance >= 30:
             self.user.is_premium = True
+            self.user.save()
             return 'Premium User'
         else:
             self.user.is_premium = False

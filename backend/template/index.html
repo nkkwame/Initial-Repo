@@ -17,18 +17,21 @@
             <div class="account-info">
                 <h4>{{isPremium.accountType}}</h4>
                 {% if isPremium.accountType == 'Premium User'%}
-                <h5>Wallet: GHS {{isPremium.accountBalance}}</h5>
+                    <h5>Wallet: GHS {{isPremium.accountBalance}}</h5>
                 {%endif%}
                 
             </div>
         </div>
         <div class="links">
             <a href="{% url 'payment-page' %}">Make payment</a>
+            {% if isPremium.accountType == 'Premium User'%}
+                <a href="{% url 'transaction-history' %}">Transaction History</a>
+            {%endif%}        
             <a href="{% url 'logout' %}">LogOut</a>
         </div>
     {% else %}
         <div class="intro">
-            <p>Welcome, new user. Please log in</p>
+            <p>Welcome, new user. Please log in or signup to join us</p>
         </div>
         <div class="links">
             <a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> or <a href="/admin">Admin</a>

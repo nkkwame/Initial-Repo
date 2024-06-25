@@ -8,6 +8,10 @@ html {
     margin: 0;
 }
 
+.message {
+    margin-bottom: 4px;
+}
+
 .message.error,
 .errorlist > li {
     color: white;
@@ -21,6 +25,15 @@ html {
 .message.success {
     color: white;
     background: linear-gradient(120deg, green,#70686842,green);
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.message.info {
+    color: white;
+    background: linear-gradient(120deg, dodgerblue,#70686842,dodgerblue);
     padding: 0.5rem;
     font-weight: bold;
     border-radius: 10px;
@@ -65,4 +78,27 @@ html {
     align-items: center;
     gap: 0.5rem;
     margin-top: 2rem;
+}
+
+.history-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 80%;
+    min-width: 50%;
+}
+
+.history-content table {
+    width: 100%;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+
+.history-content table tr {
+    border-bottom: 2px solid black;
 }

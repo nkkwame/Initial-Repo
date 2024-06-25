@@ -30,6 +30,7 @@ def index(request):
             pass
     except AccountModel.DoesNotExist:
         pass
+
     return render(request, 'index.html', context= {
         'messages': messages_to_display,
         'isPremium': {
@@ -104,6 +105,13 @@ def login_page(request, *args, **kwargs):
             user= auth.authenticate(request, username= username, password= password)
             if user is not None:
                 auth.login(request, user)
+            try:
+                userAccount= AccountModel.objects.get(user=request.user)
+                if userAccount.is_PremiumUser():
+                    messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
+            except AccountModel.DoesNotExist:
+                messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
+                messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
             return redirect('index')
         else:
             messages.error(request, f'Make sure your account is veryfied and the credentials are valid')

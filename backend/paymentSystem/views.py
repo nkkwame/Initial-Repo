@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import *
 from decimal import Decimal
+from django.contrib import messages
 import requests
 import json
 
@@ -127,3 +128,18 @@ def verifyTransaction(request, transactionID):
 
     response= JsonResponse(response_from_api, safe= False)
     return response
+
+@login_required(login_url='login')
+def transactionHistory(request):
+    if request.user.is_premium:
+        try:
+            account= AccountModel.objects.get(user= User.objects.get(email=request.user.email))
+        except AccountModel.DoesNotExist:
+            return redirect('index')
+        transactions= TransactionModel.objects.filter(account= account)
+        return render(request, 'pay/transactionHistory.html', context= {
+            'transactions': transactions,
+        })
+    else:
+        messages.error(request, 'You are not a premium user. Please upgrade to continue.')
+        return redirect('index')

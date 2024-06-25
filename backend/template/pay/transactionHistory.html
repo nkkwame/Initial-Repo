@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+        
+<div class="center">
+    <h2>{{request.user.username}}'s Transaction History</h2>
+    <div class="history-content">
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Transactions Refrence</th>
+            </tr>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{transaction.timestamp}}</td>
+                <td>{{transaction.amount}}</td>
+                <td>{{transaction.transactionType}}</td>
+                <td>{{transaction.transactionTypeStatus}}</td>
+                <td>{{transaction.transactionRefrence}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div><br>
+
+<a href="{% url 'index' %}">Home</a>
+
+{% endblock content %}
+
