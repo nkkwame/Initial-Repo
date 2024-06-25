@@ -1,5 +1,5 @@
 // const paymentForm = document.getElementById('paymentForm');
-const selectedPayment= document.querySelectorAll('.payment-method input')
+// const selectedPayment= document.querySelectorAll('.payment-method input')
 // const submitBtn= document.querySelector('#submit')
 // const el=document.querySelector('.otp')
 // const optBtn= document.querySelector('#opt-btn')
@@ -10,19 +10,19 @@ const bkPay= document.getElementById('submitbk')
   
     
 // paymentForm.addEventListener("submit", payWithPaystack, false);
-selectedPayment.forEach(x => {
-  x.addEventListener('click', () => {
-    const mf= document.querySelector('.momoForm')
-    const bf= document.querySelector('.bankForm')
-    if (x.value == 'Bank') {
-        mf.style.display= 'none'
-        bf.style.display= 'block'
-    }else{
-        mf.style.display= 'block'
-        bf.style.display= 'none'
-    }
-  })
-})
+// selectedPayment.forEach(x => {
+//   x.addEventListener('click', () => {
+//     const mf= document.querySelector('.momoForm')
+//     const bf= document.querySelector('.bankForm')
+//     if (x.value == 'Bank') {
+//         mf.style.display= 'none'
+//         bf.style.display= 'block'
+//     }else{
+//         mf.style.display= 'block'
+//         bf.style.display= 'none'
+//     }
+//   })
+// })
 
 // Intiating transanction
 // submitBtn.addEventListener('click', (e) => {
