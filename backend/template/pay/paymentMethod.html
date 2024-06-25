@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+        
+<div class="center">  
+    <h2>Payment Details</h2>
+    <form action="{% url 'pay-methods' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="fn" value="{{first_name}}"/>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="ln" value="{{last_name}}"/>
+            </div>
+            <label for="email">Email Address</label>
+            <input type="email" id="email-address" required name="ea" value="{{email}}"/>
+        </div>
+        <div class="form-group">
+            <label for="last-name">MoMo Number</label>
+            <input type="text" id="last-name" name="mn" value="{{phone}}"/>
+        </div>
+        <div class="form-group">
+            <label for="network-carriers">Network</label>
+            <select name="network-carriers" id="network-carriers">
+                <option value="{{carrier}}" selected>{{carrier}}</option>
+            {% for i in otherCarriers %}
+                <option value="{{i.code}}">{{i.name}}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="paym">Payment Method</label>
+            <select name="paym" id="paym">
+                <option value="{{paymentMethod}}" selected>{{paymentMethodName}}</option>
+            {% for i in otherpaymentMethods %}
+                <option value="{{i.method}}">{{i.name}}</option>
+            {% endfor %}
+            </select>
+        </div><br>
+        <button type="submit">Update Details</button>
+    </form><br>
+    <a href="{% url 'index' %}">Home</a>     
+</div>
+
+
+
+{% endblock content %}

@@ -128,6 +128,10 @@ accountNumberInput.addEventListener('input', function() {
       email: document.getElementById('email-address').value,
       amount: document.getElementById('amount').value * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
       currency: 'GHS', // Use GHS for Ghana Cedis or USD for US Dollars
+      first_name: document.getElementById('first-name').value,
+      last_name: document.getElementById('last-name').value,
+      // phone: document.getElementById('phone-number').value,
+      // address: {
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), // Replace with a reference you generated
       callback: function(response) {
         //this happens after the payment is completed successfully

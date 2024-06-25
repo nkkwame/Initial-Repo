@@ -30,15 +30,15 @@
     </div>
     <div class="form-group">
       <label for="amount">Amount</label>
-      <input type="number" id="amount" required min="30" max="30" width="100px" placeholder="You are required to enter 30" />
+      <input type="number" id="amount" required min="30" max="30" placeholder="You are required to enter 30" />
     </div>
     <div class="form-group">
       <label for="first-name">First Name</label>
-      <input type="text" id="first-name" />
+      <input type="text" id="first-name" value="{{request.user.first_name}}"/>
     </div>
     <div class="form-group">
       <label for="last-name">Last Name</label>
-      <input type="text" id="last-name" />
+      <input type="text" id="last-name" value="{{request.user.last_name}}"/>
     </div>
     <div class="form-submit">
       <button type="submit" onclick="payWithPaystack()"> Pay </button>

@@ -2,6 +2,10 @@ html {
     font-family: sans-serif;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .errorlist {
     list-style-type: none;
     padding: 0;
@@ -69,6 +73,10 @@ html {
     min-width: 40%;
 }
 
+.intro > div:first-child{
+    flex-grow: 2;
+}
+
 .links {
     max-width: 50%;
     min-width: 40%;
@@ -101,4 +109,33 @@ html {
 
 .history-content table tr {
     border-bottom: 2px solid black;
+}
+
+.referral {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.referral div:first-child {
+    display: flex;
+    width: 70%;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.referral > button {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 1rem;
+}
+
+a {
+    text-decoration: none;
+    border: 1px solid black;
+    background-color: gray;
+    color: black;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border-radius: 10px;
 }

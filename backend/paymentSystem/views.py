@@ -136,17 +136,32 @@ def verifyTransaction(request, transactionID):
                 transactionType= 'deposit'
                 transactionTypeStatus= response_from_api['data']['status']
                 transactionRefrence= response_from_api['data']['reference']
+                paymentMethod= response_from_api['data']['channel']
+                mobileNumber= response_from_api['data']['authorization']['mobile_money_number']
+                carrier= response_from_api['data']['authorization']['bank']
                 transaction_made= TransactionModel.objects.create(
                     account= account,
                     amount= amount,
                     transactionType= transactionType,
                     transactionTypeStatus= transactionTypeStatus,
-                    transactionRefrence= transactionRefrence
+                    transactionRefrence= transactionRefrence,
+                    paymentMethod= paymentMethod,
+                    mobileNumber= mobileNumber,
+                    carrier= carrier
                 )
                 transaction_made.save()
                 if response_from_api['data']['status'] == 'success':
-                    c=account.make_PremiumUser()
-                    print(c)
+                    account.make_PremiumUser()
+                    userPaymentMethod= PaymentInfoModel.objects.create(
+                        account= User.objects.get(email=request.user.email),
+                        paymentMethod= paymentMethod,
+                        accountNumber= mobileNumber,
+                        carrier= carrier,
+                        firstName= User.objects.get(email=request.user.email).first_name,
+                        lastName= User.objects.get(email=request.user.email).last_name,
+                        email= User.objects.get(email=request.user.email).email
+                    )
+                    userPaymentMethod.save()
     else:
         messages.error(request, 'You are already a premium user')
         return redirect('index')
@@ -168,6 +183,55 @@ def transactionHistory(request):
         return render(request, 'pay/transactionHistory.html', context= {
             'transactions': transactions,
         })
+    else:
+        messages.error(request, 'You are not a premium user. Please upgrade to continue.')
+        return redirect('index')
+    
+def paymentMethod(request):
+    if request.user.is_premium:
+        if request.method == 'POST':
+            user= User.objects.get(email=request.user.email)
+            userPaymentMethod= PaymentInfoModel.objects.get(account= user)
+            first_name= request.POST.get('fn')
+            last_name= request.POST.get('ln')
+            email= request.POST.get('ea')
+            accountNumber= request.POST.get('mn')
+            carrier= request.POST.get('network-carriers')
+            paymentMethod= request.POST.get('paym')
+
+            userPaymentMethod.firstName= first_name
+            userPaymentMethod.lastName= last_name
+            userPaymentMethod.email= email
+            userPaymentMethod.accountNumber= accountNumber
+            userPaymentMethod.carrier= carrier
+            userPaymentMethod.paymentMethod= paymentMethod
+            userPaymentMethod.save()
+            messages.success(request, 'Payment method updated successfully')
+            return redirect('index')
+
+
+        headers = {
+        'Authorization': f'Bearer {key}'
+        }
+        list_of_carriers= requests.get(url='https://api.paystack.co/bank?currency=GHS&type=mobile_money', headers= headers)
+        response_carriers= list_of_carriers.json()
+        list_ofc= []
+        for i in response_carriers['data']:
+            list_ofc.append(i)
+        userPaymentMethod= PaymentInfoModel.objects.get(account= User.objects.get(email= request.user.email))
+        print(userPaymentMethod.accountNumber)
+        context= {
+            'first_name': userPaymentMethod.firstName,
+            'last_name': userPaymentMethod.lastName,
+            'email': userPaymentMethod.email,
+            'phone': userPaymentMethod.accountNumber,
+            'carrier': userPaymentMethod.carrier,
+            'paymentMethod': userPaymentMethod.paymentMethod,
+            'paymentMethodName': userPaymentMethod.paymentMethodName,
+            'otherCarriers': list_ofc,
+            'otherpaymentMethods': PaymentChannels.objects.all(),
+        }
+        return render(request, 'pay/paymentMethod.html', context= context)
     else:
         messages.error(request, 'You are not a premium user. Please upgrade to continue.')
         return redirect('index')

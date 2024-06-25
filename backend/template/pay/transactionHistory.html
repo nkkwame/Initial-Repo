@@ -20,6 +20,9 @@
                 <th>Type</th>
                 <th>Status</th>
                 <th>Transactions Refrence</th>
+                <th>Payment Method</th>
+                <th>Account Number</th>
+                <th>Carrier</th>
             </tr>
             {% for transaction in transactions %}
             <tr>
@@ -28,6 +31,9 @@
                 <td>{{transaction.transactionType}}</td>
                 <td>{{transaction.transactionTypeStatus}}</td>
                 <td>{{transaction.transactionRefrence}}</td>
+                <td>{{transaction.paymentMethod}}</td>
+                <td>{{transaction.mobileNumber}}</td>
+                <td>{{transaction.carrier}}</td>
             </tr>
             {% endfor %}
         </table>

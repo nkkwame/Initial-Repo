@@ -9,4 +9,5 @@ urlpatterns = [
     path('verifyDeposite/<int:transactionID>/',views.verifyTransaction, name= 'verify-transaction'),
     path('transaction\'s-history/',views.transactionHistory, name= 'transaction-history'),
     path('successful-transaction/',views.successfulPayment, name= 'success'),
+    path('pay-methods/',views.paymentMethod, name='pay-methods'),
 ]

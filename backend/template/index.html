@@ -13,11 +13,23 @@
 <div class="center">        
     {% if user.is_authenticated %}
         <div class="intro">
+           <div class="welcome">
             <p>Welcome, {{user.username}}. Thanks for log in</p>
+            {% if isPremium.accountType == 'Premium User'%}
+                <div class="referral">
+                    <div class="link">
+                        <h4>Your referral link</h4>
+                        <h5>https://www.quiz.com/join/87uyj0t</h5>
+                    </div>
+                    <button>Copy link</button>
+                </div>
+            {%endif%}
+           </div>
             <div class="account-info">
                 <h4>{{isPremium.accountType}}</h4>
                 {% if isPremium.accountType == 'Premium User'%}
                     <h5>Wallet: GHS {{isPremium.accountBalance}}</h5>
+                    <button disabled="disabled">Withdraw</button>
                 {%endif%}
                 
             </div>
@@ -25,6 +37,7 @@
         <div class="links">
             {% if isPremium.accountType == 'Premium User'%}
                 <a href="{% url 'transaction-history' %}">Transaction History</a>
+                <a href="{% url 'pay-methods' %}">Update payment and withdrawal methods</a>
             {%else%}    
                 <a href="{% url 'payment-page' %}">Make payment</a>
             {%endif%}        
