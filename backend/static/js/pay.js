@@ -132,9 +132,27 @@ accountNumberInput.addEventListener('input', function() {
       callback: function(response) {
         //this happens after the payment is completed successfully
         var reference = response.reference;
-        alert('Payment complete! Reference: ' + reference);
         console.log(response);
-        // Make an AJAX call to your server with the reference to verify the transaction
+        // Making an AJAX call to server with the reference to verify the transaction
+        $.ajax({
+          type: 'GET',
+          url: `/payment/verifyDeposite/${parseInt(reference)}/`,
+          // data:{
+          //  accountNumber: acNumber,
+          //  dob: DoB,
+          //  amount: amount,
+          //  bank: bankName,
+          //   csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+          // },
+          success: function(response) {
+            console.log('verify response');
+            console.log(response)
+            window.location.href = '/'; // Redirect to success page with
+            },
+          error: function(response) {
+            alert('An error occurred');
+          }
+        });
       },
       onClose: function() {
         alert('Transaction was not completed, window closed.');

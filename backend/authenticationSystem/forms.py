@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import *
 from django import forms
-from django.contrib.auth.models import User
+from .models import CustomUserModel as User
 from django.core.exceptions import ValidationError
 
 class RegistrationForm(UserCreationForm):

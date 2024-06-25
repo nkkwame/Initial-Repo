@@ -1,12 +1,16 @@
+from authenticationSystem.models import CustomUserModel as User
 from django.contrib.auth.decorators import login_required
 from paystackapi.paystack import Paystack
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
+from .models import *
+from decimal import Decimal
 import requests
+import json
 
 
-key= settings.PAYSTACK_SECRET_KEY_LIVE
+key= settings.PAYSTACK_SECRET_KEY_TEST
 # Create your views here.
 
 @login_required(login_url='login')
@@ -101,6 +105,25 @@ def IntiateBankTransaction(request):
 
 def verifyTransaction(request, transactionID):
     paystack= Paystack(secret_key=key)
-    response_from_api= paystack.transaction.verify(transactionID)
+    response_from_api= paystack.transaction.verify(str(transactionID))
+    try:
+        account= AccountModel.objects.get(user= User.objects.get(email=request.user.email))
+    except AccountModel.DoesNotExist:
+        account= AccountModel.objects.create(user= User.objects.get(email=request.user.email))
+    amount= Decimal(response_from_api['data']['amount'] / 100)
+    transactionType= 'deposit'
+    transactionTypeStatus= response_from_api['data']['status']
+    transactionRefrence= response_from_api['data']['reference']
+    transaction_made= TransactionModel.objects.create(
+        account= account,
+        amount= amount,
+        transactionType= transactionType,
+        transactionTypeStatus= transactionTypeStatus,
+        transactionRefrence= transactionRefrence
+    )
+    transaction_made.save()
+    if response_from_api['data']['status'] == 'success':
+        transaction_made.process_transaction()
+
     response= JsonResponse(response_from_api, safe= False)
     return response

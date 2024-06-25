@@ -8,6 +8,7 @@ from django.contrib.auth.models import User, auth
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from paymentSystem.models import *
 from django.conf import settings
 from django.urls import reverse
 from .tokensGenerator import *
@@ -18,9 +19,23 @@ from .forms import *
 # @login_required(login_url='login')
 def index(request):
     messages_to_display= messages.get_messages(request)
-
+    userAccountType= 'Non-Premium User'
+    userAccountBalance= 0
+    try:
+        if request.user.is_authenticated:
+            userAccount= AccountModel.objects.get(user=request.user)
+            userAccountType= userAccount.is_PremiumUser()
+            userAccountBalance= userAccount.balance
+        else:
+            pass
+    except AccountModel.DoesNotExist:
+        pass
     return render(request, 'index.html', context= {
-        'messages': messages_to_display
+        'messages': messages_to_display,
+        'isPremium': {
+            'accountType': userAccountType,
+            'accountBalance': userAccountBalance
+        },
     })
 
 def register_user(request):
