@@ -1,12 +1,13 @@
 from authenticationSystem.models import CustomUserModel as User
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from paystackapi.paystack import Paystack
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from django.conf import settings
-from .models import *
-from decimal import Decimal
 from django.contrib import messages
+from referralSystem.views import *
+from django.conf import settings
+from decimal import Decimal
+from .models import *
 import requests
 import json
 
@@ -111,6 +112,7 @@ def IntiateBankTransaction(request):
 
 def verifyTransaction(request, transactionID):
     if not request.user.is_premium:
+        user= User.objects.get(email=request.user.email)
         transactionExist= False
         paystack= Paystack(secret_key=key)
         response_from_api= paystack.transaction.verify(str(transactionID))
@@ -128,9 +130,9 @@ def verifyTransaction(request, transactionID):
                 return redirect('index')
             else:
                 try:
-                    account= AccountModel.objects.get(user= User.objects.get(email=request.user.email))
+                    account= AccountModel.objects.get(user= user)
                 except AccountModel.DoesNotExist:
-                    account= AccountModel.objects.create(user= User.objects.get(email=request.user.email))
+                    account= AccountModel.objects.create(user= user)
                     account.save()
                 amount= Decimal(response_from_api['data']['amount'] / 100)
                 transactionType= 'deposit'
@@ -152,16 +154,20 @@ def verifyTransaction(request, transactionID):
                 transaction_made.save()
                 if response_from_api['data']['status'] == 'success':
                     account.make_PremiumUser()
+                    user.referral_code= generate_unique_referral_code(userName= user.username)
+                    user.save()
                     userPaymentMethod= PaymentInfoModel.objects.create(
-                        account= User.objects.get(email=request.user.email),
+                        account= user,
                         paymentMethod= paymentMethod,
                         accountNumber= mobileNumber,
                         carrier= carrier,
-                        firstName= User.objects.get(email=request.user.email).first_name,
-                        lastName= User.objects.get(email=request.user.email).last_name,
-                        email= User.objects.get(email=request.user.email).email
+                        firstName= user.first_name,
+                        lastName= user.last_name,
+                        email= user.email
                     )
                     userPaymentMethod.save()
+                    if user.referred_by != '':
+                        new_referral(user.referred_by, user.referral_code)
     else:
         messages.error(request, 'You are already a premium user')
         return redirect('index')

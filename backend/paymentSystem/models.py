@@ -10,7 +10,13 @@ class AccountModel(models.Model):
             self.user.is_premium = True
             self.user.save()
             return 'Premium User'
-
+    
+    def update_balance(self):
+        user_points= self.user.points_earned
+        self.balance= user_points * 30
+        self.save()
+        return 'Balance has been updated'
+    
     def __str__(self):
         return f'{self.user.username}'
     

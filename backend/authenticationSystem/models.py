@@ -54,8 +54,11 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     referred_by= models.CharField(max_length= 240, blank= True)
     referral_code= models.CharField(max_length= 240, blank= True)
     referrals= models.PositiveIntegerField(default= 0)
+    indirectReferrals= models.PositiveIntegerField(default= 0)
     referral_code_expired= models.BooleanField(default= False)
-    points_earned= models.PositiveIntegerField(default= 0)
+    points_earned= models.DecimalField(max_digits=10, decimal_places=2, default= 0.00)
+    direct_referrals= models.CharField(max_length= 99999, blank= True, default='')
+    indrect_referrals= models.CharField(max_length= 99999, blank= True, default='')
 
     is_premium= models.BooleanField(default= False)
     is_staff= models.BooleanField(default= False)

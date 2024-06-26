@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #Apps
     'authenticationSystem',
     'paymentSystem',
+    'referralSystem',
 ]
 
 MIDDLEWARE = [

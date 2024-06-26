@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from paymentSystem.models import *
+from referralSystem.views import *
 from django.conf import settings
 from django.urls import reverse
 from .tokensGenerator import *
@@ -21,11 +22,14 @@ def index(request):
     messages_to_display= messages.get_messages(request)
     userAccountType= 'Non-Premium User'
     userAccountBalance= 0
+    refLink= ''
     try:
         if request.user.is_authenticated:
             userAccount= AccountModel.objects.get(user=request.user)
             if request.user.is_premium:
                 userAccountType= 'Premium User'
+                refLink= referral_link(get_current_site(request), request.user.referral_code)
+            userAccount.update_balance()
             userAccountBalance= userAccount.balance
         else:
             pass
@@ -36,7 +40,8 @@ def index(request):
         'messages': messages_to_display,
         'isPremium': {
             'accountType': userAccountType,
-            'accountBalance': userAccountBalance
+            'accountBalance': userAccountBalance,
+            'refLink': refLink
         },
     })
 

@@ -1,0 +1,4 @@
+Models
+    1. Model for storing referral codes 
+
+An ajax function must be set based on time interval to keep track of user balance changes
