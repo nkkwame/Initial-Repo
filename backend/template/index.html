@@ -31,9 +31,27 @@
                     <h5>Wallet: GHS {{isPremium.accountBalance}}</h5>
                     <button disabled="disabled">Withdraw</button>
                 {%endif%}
-                
             </div>
         </div>
+        {% if isPremium.accountType == 'Premium User' %}
+            <div class="ref-container">
+                <div class="upper"><h3>Referral Section</h3></div>
+                <div class="lower">
+                    <div class="item">
+                        <h4>Total referrals</h4>
+                        <h5>{{isPremium.ref_data.tr}}</h5>
+                    </div>
+                    <div class="item">
+                        <h4>Non Premium referrals</h4>
+                        <h5>{{isPremium.ref_data.npr}}</h5>
+                    </div>
+                    <div class="item">
+                        <h4>Premium referrals</h4>
+                        <h5>{{isPremium.ref_data.pr}}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <div class="links">
             {% if isPremium.accountType == 'Premium User'%}
                 <a href="{% url 'transaction-history' %}">Transaction History</a>

@@ -11,4 +11,5 @@ urlpatterns = [
     # path('password-reset/complete/', passwordResetComplete, name= 'password-reset-complete'), send mail on completion
     # path('password-reset/done/', passwordResetDone, name= 'password-reset-done'), show reset done page
     path('password-change/<str:id>/', passwordChange, name= 'password-change'),# change password
+    path('invite/<str:code>/', inviteRedirect, name= 'invite-redirect'),
 ]

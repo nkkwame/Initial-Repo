@@ -51,14 +51,17 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     last_name= models.CharField(max_length= 240)
     email= models.EmailField(db_index= True, unique= True, max_length= 240)
     username= models.CharField(unique= True, max_length= 240)
+
+
     referred_by= models.CharField(max_length= 240, blank= True)
     referral_code= models.CharField(max_length= 240, blank= True)
     referrals= models.PositiveIntegerField(default= 0)
     indirectReferrals= models.PositiveIntegerField(default= 0)
     referral_code_expired= models.BooleanField(default= False)
-    points_earned= models.DecimalField(max_digits=10, decimal_places=2, default= 0.00)
+    points_earned= models.DecimalField(max_digits=10, decimal_places=2)
     direct_referrals= models.CharField(max_length= 99999, blank= True, default='')
     indrect_referrals= models.CharField(max_length= 99999, blank= True, default='')
+    non_pro_referrals= models.CharField(max_length= 99999, blank= True, default='')
 
     is_premium= models.BooleanField(default= False)
     is_staff= models.BooleanField(default= False)
@@ -81,6 +84,7 @@ class TokensModel(models.Model):
     token= models.CharField(blank=False, null=False, max_length= 999999999999)
     timestamp= models.DateTimeField(blank=False, null=False, auto_now_add= True)
     user_id= models.IntegerField(blank=False, null=False)
+    refCode= models.CharField(max_length= 240, null= True, default='')
 
     def __str__(self):
         return f'{self.user_id} ---> {self.timestamp}'

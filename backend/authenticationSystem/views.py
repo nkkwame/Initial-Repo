@@ -22,7 +22,7 @@ def index(request):
     messages_to_display= messages.get_messages(request)
     userAccountType= 'Non-Premium User'
     userAccountBalance= 0
-    refLink= ''
+    refLink= ''    
     try:
         if request.user.is_authenticated:
             userAccount= AccountModel.objects.get(user=request.user)
@@ -41,15 +41,25 @@ def index(request):
         'isPremium': {
             'accountType': userAccountType,
             'accountBalance': userAccountBalance,
-            'refLink': refLink
+            'refLink': refLink,
+            'ref_data': get_referrals_data(request),
         },
     })
 
+def inviteRedirect(request, code):
+    return redirect(reverse('register') + '?ref=' + code)
+
 def register_user(request):
+    refCode=None
+    try:
+        refCode= request.GET.get('ref')
+    except:
+        pass
     messages_to_display= messages.get_messages(request)
     form= RegistrationForm()
     if request.method == 'POST':
         form= RegistrationForm(request.POST)
+        refCode= request.POST.get('refCode')
         if form.is_valid():
             to_email= form.cleaned_data.get('email')
             username= form.cleaned_data.get('username')
@@ -58,7 +68,7 @@ def register_user(request):
             user.save()
             current_site= get_current_site(request) #Geting the curent site domain
             token= TokenGeneratorValidator.make_token(user) #Generating hash 
-            tokenID= TokensModel.objects.create(token=token, user_id=user.id) # Registering token to database
+            tokenID= TokensModel.objects.create(token=token, user_id=user.id, refCode= refCode) # Registering token to database
             tokenID.save()
             mail_subject= 'Account Activation' #Email to be sent preparation process
             message= render_to_string('auth/mail/accountActivation.html', {
@@ -75,7 +85,8 @@ def register_user(request):
             return redirect('index')
     return render(request, 'auth/register.html', context= {
         'form': RegistrationForm,
-        'messages': messages_to_display
+        'messages': messages_to_display, 
+        'refCode': refCode
     })
 
 # Account activation
