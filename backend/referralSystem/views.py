@@ -14,15 +14,22 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     referrer.save()
 
     #Check if referrer was also referred by someone
-    if referrer.referred_by != '':
-        referrer_referral = User.objects.get(referral_code=referrer.referred_by)
-        referrer_referral.points_earned = Decimal(referrer_referral.points_earned) + Decimal(round((commission_rate * Decimal( 0.5)), 1))
-        if referrer_referral.indirect_referrals == '':
-            referrer_referral.indirect_referrals += str(new_user.username)
+    first_ref= referrer
+    cmr= Decimal(round((commission_rate * Decimal( 0.5)), 2))
+    while True:
+        if first_ref.referred_by != '':
+            referrer_referral = User.objects.get(referral_code=first_ref.referred_by)
+            referrer_referral.points_earned = Decimal(referrer_referral.points_earned) + cmr
+            if referrer_referral.indirect_referrals == '':
+                referrer_referral.indirect_referrals += str(new_user.username)
+            else:
+                referrer_referral.indirect_referrals += ',' + str(new_user.username)
+            referrer_referral.indirectReferrals += 1
+            referrer_referral.save()
+            first_ref = referrer_referral
+            cmr= Decimal(round((cmr * Decimal( 0.5)), 2))
         else:
-            referrer_referral.indirect_referrals += ',' + str(new_user.username)
-        referrer_referral.indirectReferrals += 1
-        referrer_referral.save()
+            break
 
 def new_referral(referred_by_code, new_user_referral_code):
     new_user = User.objects.get(referral_code=new_user_referral_code)
