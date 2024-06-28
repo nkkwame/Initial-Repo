@@ -83,6 +83,13 @@ def register_user(request):
             email.send()
             messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
             return redirect('index')
+        else:
+            if form.errors:
+                for field, errors in form.errors.items():
+                    print(f'Field {field} has the following errors')
+                    for error in errors:
+                        messages.error(request, error)
+            
     return render(request, 'auth/register.html', context= {
         'form': RegistrationForm,
         'messages': messages_to_display, 
@@ -122,13 +129,12 @@ def login_page(request, *args, **kwargs):
             user= auth.authenticate(request, username= username, password= password)
             if user is not None:
                 auth.login(request, user)
-            try:
-                # userAccount= AccountModel.objects.get(user=request.user)
+           
                 if request.user.is_premium:
                     messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
-            except AccountModel.DoesNotExist:
-                messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
-                messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
+                else:
+                    messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
+
             return redirect('index')
         else:
             messages.error(request, f'Make sure your account is veryfied and the credentials are valid')

@@ -12,11 +12,17 @@ class RegistrationForm(UserCreationForm):
         model= User
         fields= ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
-    def clean_email(self):
+    def clean(self):
+        cleaned_data= super().clean()
         email= self.cleaned_data.get('email')
-        if User.objects.filter(email= email).exists():
-            raise ValidationError('An account with this email address already exists')
-        return email
+        username= self.cleaned_data.get('username')
+        if User.objects.filter(username= username).exists():
+            # raise ValidationError('An account with this username already exists')
+            pass
+        elif User.objects.filter(email= email).exists():
+            # raise ValidationError('An account with this email address already exists')
+            pass
+        return cleaned_data
 
 
 class LoginForm(AuthenticationForm):

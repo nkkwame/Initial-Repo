@@ -16,11 +16,11 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     #Check if referrer was also referred by someone
     if referrer.referred_by != '':
         referrer_referral = User.objects.get(referral_code=referrer.referred_by)
-        referrer_referral.points_earned += Decimal(round((commission_rate * Decimal( 0.5)), 1))
+        referrer_referral.points_earned = Decimal(referrer_referral.points_earned) + Decimal(round((commission_rate * Decimal( 0.5)), 1))
         if referrer_referral.indirect_referrals == '':
-            referrer_referral.indrect_referrals += str(new_user.username)
+            referrer_referral.indirect_referrals += str(new_user.username)
         else:
-            referrer_referral.indrect_referrals += ',' + str(new_user.username)
+            referrer_referral.indirect_referrals += ',' + str(new_user.username)
         referrer_referral.indirectReferrals += 1
         referrer_referral.save()
 
