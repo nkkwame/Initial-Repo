@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Your Marketing Company</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"/>
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/auth-page.css">
+    <link rel="stylesheet" href="assets/css/landingpage.css">
+    <link rel="shortcut icon" href="assets/imgs/logo.jfif" type="image/x-icon" id="fav">
+    <title>Anonymus</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -84,17 +92,44 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Your Marketing Company</h1>
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Contact</a>
-            </nav>
+    <nav>
+        <div class="upper">
+            <div class="item">
+                <a href="#">
+                    <div class="logo">
+                        <img src="assets/imgs/logo.jfif" alt="">
+                    </div>
+                    <h3 class="site">Network-Market</h3>
+                </a>
+            </div>
+            <div class="item">
+                <div id="btn-signUp-signIn">
+                    <h4>
+                        <span>Sign In</span><span>or</span><span>Join us</span>
+                    </h4>
+                </div>
+                <button id="show-nav"><i class="ri-menu-3-line"></i></button>
+            </div>
         </div>
-    </header>
+        <div class="lower">
+            <div class="links">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="search">
+                <form action="" method="post">
+                    <input type="text" name="search" placeholder="Search" autocomplete="off">
+                    <button type="submit" name="submit">
+                        <i class="ri-search-2-line"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
     
     <div class="container main-content">
         <h2>Contact Us</h2>
